@@ -3,9 +3,11 @@ import { useJobs } from "../hooks/useJobs";
 import FilterItem from "./filter-item";
 import topImage from "/images/bg-header-desktop.svg";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 function FiltersContainer() {
   const [filtersState, setFilterState] = useState<string[]>([]);
+  const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
   const {
     state: { filters },
   } = useJobs();
@@ -42,7 +44,9 @@ function FiltersContainer() {
       <animated.div
         style={spring}
         className={
-          filters.length > 0 ? "filter-container" : "filter-container-empty"
+          filters.length > 0
+            ? `filter-container ${isPhone ? "phone" : ""}`
+            : "filter-container-empty"
         }
       >
         {transitions((style, item) => (
